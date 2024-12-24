@@ -65,6 +65,26 @@
 
       <div class="separator"></div>
 
+      <h2>Sum and Average</h2>
+      <div class="input-container">
+        <div class="number-inputs">
+          <div>
+            <label for="numbers">Enter numbers (separated by commas):</label>
+            <input type="text" id="numbers" placeholder="1, 2, 3, 4, 5" />
+          </div>
+        </div>
+
+        <div class="operations">
+          <button onclick="calculate('sum')">Sum</button>
+          <button onclick="calculate('average')">Average</button>
+        </div>
+
+        <div class="result" id="result">Result: 0</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <h2>Two Number Operations</h2>
       <div class="input-container">
         <div class="number-inputs">
           <div>
@@ -78,26 +98,53 @@
         </div>
 
         <div class="operations">
-          <button onclick="calculate('add')">Add (+)</button>
-          <button onclick="calculate('subtract')">Subtract (-)</button>
-          <button onclick="calculate('multiply')">Multiply (×)</button>
-          <button onclick="calculate('divide')">Divide (÷)</button>
+          <button onclick="calculateTwoNumbers('subtract')">
+            Subtract (-)
+          </button>
+          <button onclick="calculateTwoNumbers('multiply')">
+            Multiply (×)
+          </button>
+          <button onclick="calculateTwoNumbers('divide')">Divide (÷)</button>
         </div>
 
-        <div class="result" id="result">Result: 0</div>
+        <div class="result" id="twoNumResult">Result: 0</div>
       </div>
     </main>
 
     <script>
       function calculate(operation) {
+        const numbersStr = document.getElementById("numbers").value;
+        const numbers = numbersStr
+          .split(",")
+          .map((num) => Number(num.trim()))
+          .filter((num) => !isNaN(num));
+
+        if (numbers.length === 0) {
+          document.getElementById("result").textContent =
+            "Error: Please enter valid numbers";
+          return;
+        }
+
+        let result;
+        switch (operation) {
+          case "sum":
+            result = numbers.reduce((acc, curr) => acc + curr, 0);
+            break;
+          case "average":
+            result =
+              numbers.reduce((acc, curr) => acc + curr, 0) / numbers.length;
+            break;
+        }
+
+        document.getElementById("result").textContent = `Result: ${result}`;
+      }
+
+      function calculateTwoNumbers(operation) {
         const num1 = Number(document.getElementById("num1").value);
         const num2 = Number(document.getElementById("num2").value);
         let result;
 
         switch (operation) {
-          case "add":
-            result = num1 + num2;
-            break;
           case "subtract":
             result = num1 - num2;
             break;
@@ -106,7 +153,7 @@
             break;
           case "divide":
             if (num2 === 0) {
-              document.getElementById("result").textContent =
+              document.getElementById("twoNumResult").textContent =
                 "Error: Cannot divide by zero";
               return;
             }
@@ -114,7 +161,9 @@
             break;
         }
 
-        document.getElementById("result").textContent = `Result: ${result}`;
+        document.getElementById(
+          "twoNumResult"
+        ).textContent = `Result: ${result}`;
       }
     </script>
   </body>

@@ -52,6 +52,7 @@
       let data = [0];
       let mean = 0;
       let standardDeviation = 0;
+      let variance = 0;
       let currentChart = null; // Global variable for current chart
 
       const dataInput = document.getElementById("data");
@@ -67,9 +68,10 @@
       drawChart();
 
       function calculate() {
-        // 📐 Calculate Standard Deviation and Mean
+        // 📐 Calculate Standard Deviation, Mean and Variance
         mean = math.mean(data);
         standardDeviation = math.std(data);
+        variance = math.variance(data);
       }
 
       function drawChart() {
@@ -110,7 +112,9 @@
                 display: true,
                 text: `Mean: ${mean.toFixed(
                   2
-                )}, Standard Deviation: ${standardDeviation.toFixed(2)}`,
+                )}, Standard Deviation: ${standardDeviation.toFixed(
+                  2
+                )}, Variance: ${variance.toFixed(2)}`,
               },
             },
             responsive: true,
